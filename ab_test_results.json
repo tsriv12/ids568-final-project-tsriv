@@ -1,0 +1,24 @@
+{
+  "groundedness": {
+    "mean_a": 0.6729,
+    "mean_b": 0.7252,
+    "diff_b_minus_a": 0.0524,
+    "p_value": 0.0006,
+    "significant_at_bonferroni": true,
+    "ci_95": [
+      0.0222,
+      0.0815
+    ]
+  },
+  "latency_s": {
+    "mean_a": 3.172,
+    "mean_b": 3.3121,
+    "diff_b_minus_a": 0.1401,
+    "p_value": 0.1922,
+    "significant_at_bonferroni": false,
+    "ci_95": [
+      -0.0753,
+      0.354
+    ]
+  }
+}

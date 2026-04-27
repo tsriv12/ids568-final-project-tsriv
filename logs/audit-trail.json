@@ -1,0 +1,53 @@
+[
+  {
+    "timestamp": "2024-11-15T10:00:00Z",
+    "event_type": "model_version_initial",
+    "version": "1.0.0",
+    "description": "Initial deployment. mistral:7b-instruct via Ollama. chunk_size=256. ChromaDB mlops_rag with 10 documents. all-MiniLM-L6-v2 embeddings. Three tools: Retriever, Summarizer, KeywordExtractor.",
+    "approved_by": "Tanya Srivastava (Milestone 6 submission)",
+    "artifacts": ["rag_pipeline.ipynb", "agent_controller.py", "requirements.txt"]
+  },
+  {
+    "timestamp": "2024-12-01T14:00:00Z",
+    "event_type": "monitoring_deployed",
+    "description": "Prometheus + Grafana monitoring stack deployed. 7 metric panels: RAG QPS, Total Requests, P99 Latency, Generation P50, Retrieval Similarity, Ollama Status, Input Anomaly. Real Mistral inference instrumented.",
+    "approved_by": "Tanya Srivastava",
+    "artifacts": ["src/monitoring/instrumentation.py", "dashboards/prometheus.yml", "dashboards/grafana-export.json"]
+  },
+  {
+    "timestamp": "2024-12-02T09:00:00Z",
+    "event_type": "ab_test_initiated",
+    "description": "A/B test started: chunk_size=256 (A) vs chunk_size=512 (B). 130 simulated queries per variant. Primary metric: groundedness score. Power calculation: 123 samples required at alpha=0.05, power=0.80, MDE=0.05.",
+    "approved_by": "Tanya Srivastava",
+    "artifacts": ["src/ab_test/simulation.py", "docs/experiment-specification.md"]
+  },
+  {
+    "timestamp": "2024-12-02T11:30:00Z",
+    "event_type": "ab_test_completed",
+    "description": "A/B test concluded. Variant B (chunk_size=512) won: groundedness +0.052 (p=0.0006, significant at Bonferroni-adjusted alpha=0.025). Latency increase +0.14s not significant (p=0.19). Decision: ship Variant B.",
+    "approved_by": "Tanya Srivastava",
+    "artifacts": ["docs/recommendation-memo.md", "visualizations/ab_test_chunk_size.png", "ab_test_results.json"]
+  },
+  {
+    "timestamp": "2024-12-02T12:00:00Z",
+    "event_type": "model_version_change",
+    "version": "1.1.0",
+    "description": "Updated chunk_size from 256 to 512 tokens based on A/B test results. Re-indexed ChromaDB mlops_rag collection. Model card updated to reflect new configuration.",
+    "approved_by": "Tanya Srivastava",
+    "artifacts": ["docs/model-card.md", "rag_pipeline.ipynb"]
+  },
+  {
+    "timestamp": "2024-12-03T08:00:00Z",
+    "event_type": "drift_detection_run",
+    "description": "Drift analysis completed over 4 simulated weeks. query_length PSI=0.45 at week 4 (critical, above 0.25 threshold). retrieval_similarity degraded from 0.891 to 0.68. Intervention recommended: add confidence threshold and expand corpus.",
+    "approved_by": "Tanya Srivastava",
+    "artifacts": ["src/drift/drift_detection.py", "docs/drift-diagnostic-report.md", "visualizations/drift_psi_summary.png"]
+  },
+  {
+    "timestamp": "2024-12-04T10:00:00Z",
+    "event_type": "risk_review_completed",
+    "description": "Full AI risk assessment completed. 10 risks identified across robustness, privacy, bias, compliance categories. Top priorities: R03 corpus scope hallucination, R04 Ollama crash, R06 prompt injection. CTO memo written with 3 pre-launch blockers identified.",
+    "approved_by": "Tanya Srivastava",
+    "artifacts": ["docs/risk-register.md", "docs/governance-review.md", "docs/cto-memo.md"]
+  }
+]
