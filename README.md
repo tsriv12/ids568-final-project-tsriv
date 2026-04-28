@@ -38,8 +38,11 @@ User Query -> all-MiniLM-L6-v2 -> ChromaDB (mlops_rag) -> Mistral 7B (Ollama) ->
 ### 1. Clone and install
     git clone https://github.com/tsriv12/ids568-final-project-tsriv.git
     cd ids568-final-project-tsriv
-    source /path/to/milestone6/venv/bin/activate
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install --upgrade pip
     pip install -r requirements.txt
+    python -m ipykernel install --user --name=milestone6 --display-name "Milestone 6"
 
 ### 2. Build ChromaDB index
     jupyter nbconvert --to notebook --execute rag_pipeline.ipynb
