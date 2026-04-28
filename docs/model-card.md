@@ -1,7 +1,7 @@
 # Model Card — Mistral 7B RAG + Agentic Controller Pipeline
 
 **Version:** 1.1.0 (chunk_size=512, post A/B test)
-**Date:** April 27, 2025
+**Date:** April 27, 2026
 **Owner:** Tanya Srivastava | tsriv | ids568
 **Repository:** ids568-milestone6-tsriv -> ids568-final-project-tsriv
 

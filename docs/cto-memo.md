@@ -2,7 +2,7 @@
 
 **To:** Chief Technology Officer
 **From:** Tanya Srivastava, MLOps Engineer
-**Date:** April 27, 2025
+**Date:** April 27, 2026
 **Re:** AI Risk Assessment — Mistral 7B RAG Question-Answering System
 **Classification:** Internal Confidential
 

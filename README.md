@@ -45,10 +45,7 @@ User Query -> all-MiniLM-L6-v2 -> ChromaDB (mlops_rag) -> Mistral 7B (Ollama) ->
     python -m ipykernel install --user --name=milestone6 --display-name "Milestone 6"
 
 ### 2. Build ChromaDB index
-    jupyter nbconvert --to notebook --execute rag_pipeline.ipynb
-      --output rag_pipeline.ipynb
-      --ExecutePreprocessor.timeout=600
-      --ExecutePreprocessor.kernel_name=milestone6
+    jupyter nbconvert --to notebook --execute rag_pipeline.ipynb --output rag_pipeline.ipynb --ExecutePreprocessor.timeout=600 --ExecutePreprocessor.kernel_name=milestone6
 
 ### 3. Run monitoring dashboard
     cd dashboards && docker compose up -d && cd ..
