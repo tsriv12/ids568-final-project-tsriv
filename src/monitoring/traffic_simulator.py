@@ -12,10 +12,12 @@ import os
 import time
 import random
 import logging
+from pathlib import Path
 
-# Make agent_controller importable from repo root
-sys.path.insert(0, "/home/tanyasrivastava/ids568-final-project-tsriv")
-sys.path.insert(0, "/home/tanyasrivastava/ids568-final-project-tsriv/src/monitoring")
+# Make agent_controller and instrumentation importable regardless of where repo is cloned
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(REPO_ROOT / "src" / "monitoring"))
 
 from instrumentation import (
     track_e2e, record_retrieval_quality,
