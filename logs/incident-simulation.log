@@ -1,0 +1,54 @@
+2026-05-01 04:02:35,790 INFO Starting incident simulation...
+2026-05-01 04:02:35,790 INFO Metrics: http://localhost:8001/metrics
+2026-05-01 04:02:35,790 INFO Watch: agent_ollama_model_loaded and agent_requests_total{status=error}
+2026-05-01 04:02:35,792 INFO Prometheus metrics server started on port 8001
+2026-05-01 04:02:37,792 INFO [NORMAL] Simulating 30s of healthy traffic...
+2026-05-01 04:02:37,793 INFO [NORMAL] Request 1 OK — similarity=0.776
+2026-05-01 04:02:40,793 INFO [NORMAL] Request 2 OK — similarity=0.830
+2026-05-01 04:02:43,793 INFO [NORMAL] Request 3 OK — similarity=0.765
+2026-05-01 04:02:46,794 INFO [NORMAL] Request 4 OK — similarity=0.794
+2026-05-01 04:02:49,794 INFO [NORMAL] Request 5 OK — similarity=0.911
+2026-05-01 04:02:52,794 INFO [NORMAL] Request 6 OK — similarity=0.784
+2026-05-01 04:02:55,795 INFO [NORMAL] Request 7 OK — similarity=0.857
+2026-05-01 04:02:58,795 INFO [NORMAL] Request 8 OK — similarity=0.916
+2026-05-01 04:03:01,795 INFO [NORMAL] Request 9 OK — similarity=0.834
+2026-05-01 04:03:04,796 INFO [NORMAL] Request 10 OK — similarity=0.761
+2026-05-01 04:03:07,796 INFO ============================================================
+2026-05-01 04:03:07,796 INFO [INCIDENT] Simulating Ollama crash!
+2026-05-01 04:03:07,796 INFO [INCIDENT] agent_ollama_model_loaded -> 0
+2026-05-01 04:03:07,796 INFO [INCIDENT] This would fire: OllamaModelDown (critical)
+2026-05-01 04:03:07,796 INFO ============================================================
+2026-05-01 04:03:07,796 WARNING [INCIDENT] Request 1 FAILED — Ollama down, error count rising
+2026-05-01 04:03:10,797 WARNING [INCIDENT] Request 2 FAILED — Ollama down, error count rising
+2026-05-01 04:03:13,797 WARNING [INCIDENT] Request 3 FAILED — Ollama down, error count rising
+2026-05-01 04:03:16,797 WARNING [INCIDENT] Request 4 FAILED — Ollama down, error count rising
+2026-05-01 04:03:19,798 WARNING [INCIDENT] Request 5 FAILED — Ollama down, error count rising
+2026-05-01 04:03:22,798 WARNING [INCIDENT] Request 6 FAILED — Ollama down, error count rising
+2026-05-01 04:03:25,798 WARNING [INCIDENT] Request 7 FAILED — Ollama down, error count rising
+2026-05-01 04:03:28,799 WARNING [INCIDENT] Request 8 FAILED — Ollama down, error count rising
+2026-05-01 04:03:31,799 WARNING [INCIDENT] Request 9 FAILED — Ollama down, error count rising
+2026-05-01 04:03:34,799 WARNING [INCIDENT] Request 10 FAILED — Ollama down, error count rising
+2026-05-01 04:03:37,800 WARNING [INCIDENT] Request 11 FAILED — Ollama down, error count rising
+2026-05-01 04:03:40,800 WARNING [INCIDENT] Request 12 FAILED — Ollama down, error count rising
+2026-05-01 04:03:43,800 WARNING [INCIDENT] Request 13 FAILED — Ollama down, error count rising
+2026-05-01 04:03:46,801 WARNING [INCIDENT] Request 14 FAILED — Ollama down, error count rising
+2026-05-01 04:03:49,801 WARNING [INCIDENT] Request 15 FAILED — Ollama down, error count rising
+2026-05-01 04:03:52,801 WARNING [INCIDENT] Request 16 FAILED — Ollama down, error count rising
+2026-05-01 04:03:55,802 WARNING [INCIDENT] Request 17 FAILED — Ollama down, error count rising
+2026-05-01 04:03:58,802 WARNING [INCIDENT] Request 18 FAILED — Ollama down, error count rising
+2026-05-01 04:04:01,802 WARNING [INCIDENT] Request 19 FAILED — Ollama down, error count rising
+2026-05-01 04:04:04,803 WARNING [INCIDENT] Request 20 FAILED — Ollama down, error count rising
+2026-05-01 04:04:07,803 INFO [INCIDENT] 20 requests failed during incident window
+2026-05-01 04:04:07,803 INFO ============================================================
+2026-05-01 04:04:07,803 INFO [RECOVERY] Ollama restarted via systemd watchdog
+2026-05-01 04:04:07,803 INFO [RECOVERY] agent_ollama_model_loaded -> 1
+2026-05-01 04:04:07,803 INFO [RECOVERY] OllamaModelDown alert resolves
+2026-05-01 04:04:07,803 INFO ============================================================
+2026-05-01 04:04:07,804 INFO [RECOVERY] Request 1 OK — system restored
+2026-05-01 04:04:09,804 INFO [RECOVERY] Request 2 OK — system restored
+2026-05-01 04:04:11,804 INFO [RECOVERY] Request 3 OK — system restored
+2026-05-01 04:04:13,805 INFO [RECOVERY] Request 4 OK — system restored
+2026-05-01 04:04:15,805 INFO [RECOVERY] Request 5 OK — system restored
+2026-05-01 04:04:17,805 INFO Incident simulation complete.
+2026-05-01 04:04:17,805 INFO In production: OllamaModelDown alert would have fired within 1 minute of crash.
+2026-05-01 04:04:17,806 INFO Mitigation: systemd watchdog auto-restarts Ollama within 30 seconds.
