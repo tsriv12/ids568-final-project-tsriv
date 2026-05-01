@@ -107,3 +107,21 @@ Mistral issue — critical for fast root cause analysis.
 The similarity score is a point-in-time quality signal, not a latency distribution.
 A gauge is the correct Prometheus type — it shows the current health state and
 enables threshold-based alerting, which a histogram cannot do directly.
+
+---
+
+## 5. Challenge Extension: Alerting Rules & Incident Simulation
+
+Alert rules are defined in `dashboards/alert_rules.yml` covering 5 conditions:
+OllamaModelDown (critical), RAGLatencySLABreach (warning), RetrievalQualityDegraded
+(warning), ZeroThroughput (critical), and InputAnomalySpike (warning).
+
+An incident was simulated using `src/monitoring/simulate_incident.py`:
+- Phase 1 (Normal): 10 requests processed, similarity 0.76–0.90, Ollama loaded=1
+- Phase 2 (Incident): Ollama set to loaded=0, 20 consecutive request failures over 60s.
+  In production, OllamaModelDown alert fires after 1 minute and ZeroThroughput
+  fires after 2 minutes, paging on-call engineers.
+- Phase 3 (Recovery): Ollama restarted via systemd watchdog, loaded=1,
+  requests resume successfully. Alert resolves automatically.
+
+Full incident log saved at: logs/incident-simulation.log

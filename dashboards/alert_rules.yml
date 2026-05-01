@@ -1,0 +1,48 @@
+groups:
+  - name: rag_pipeline_alerts
+    rules:
+
+      - alert: OllamaModelDown
+        expr: agent_ollama_model_loaded == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Ollama model is not loaded"
+          description: "mistral:7b-instruct has not been loaded for more than 1 minute. All RAG and Agent requests will fail."
+
+      - alert: RAGLatencySLABreach
+        expr: histogram_quantile(0.99, rate(agent_e2e_duration_seconds_bucket{pipeline_type="rag"}[5m])) > 8
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RAG P99 latency exceeds 8s SLA"
+          description: "RAG pipeline P99 latency has exceeded the 8 second SLA for more than 3 minutes."
+
+      - alert: RetrievalQualityDegraded
+        expr: agent_retrieval_top_similarity < 0.70
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Retrieval similarity below healthy threshold"
+          description: "Top-1 retrieval similarity has been below 0.70 for 10 minutes. Hallucination risk is elevated."
+
+      - alert: ZeroThroughput
+        expr: rate(agent_requests_total[2m]) == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "No requests being processed"
+          description: "RAG pipeline has received zero requests for 2 minutes. Service may be down."
+
+      - alert: InputAnomalySpike
+        expr: avg_over_time(agent_input_anomaly_flag[5m]) > 0.10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High rate of anomalous inputs detected"
+          description: "More than 10% of requests in the last 5 minutes were flagged as anomalous. Possible bot traffic or prompt injection attempt."
