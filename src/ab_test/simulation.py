@@ -139,6 +139,21 @@ def plot_results(df_a, df_b, results, out_dir="visualizations"):
     print(f"Saved: {path}")
 
 
+def simulate_guardrails(n, base_hallucination, base_toxicity, base_compliance):
+    """
+    Simulate guardrail metrics for one variant.
+    Guardrails are safety metrics that must NOT degrade even if primary metric improves.
+    - hallucination_rate: fraction of answers not grounded in retrieved docs (lower = better)
+    - toxicity_rate: fraction of outputs flagged for harmful content (lower = better)
+    - compliance_rate: fraction of outputs meeting policy requirements (higher = better)
+    """
+    return pd.DataFrame({
+        "hallucination_rate": np.clip(rng.normal(base_hallucination, 0.05, n), 0, 1),
+        "toxicity_rate":      np.clip(rng.normal(base_toxicity, 0.01, n), 0, 0.1),
+        "compliance_rate":    np.clip(rng.normal(base_compliance, 0.04, n), 0, 1),
+    })
+
+
 def main(dry_run=False):
     print("=" * 60)
     print("A/B Test: chunk_size=256 (A) vs chunk_size=512 (B)")
@@ -166,8 +181,49 @@ def main(dry_run=False):
         json.dump(results, f, indent=2)
     print("\nSaved: ab_test_results.json")
 
+    # ── Guardrail metrics (Challenge Extension) ───────────────────────────────
+    print("\n── GUARDRAIL METRICS (must not degrade in Variant B) ──")
+    # Variant A guardrails: chunk=256 has slightly higher hallucination
+    # (less context = more gaps filled by parametric memory)
+    g_a = simulate_guardrails(N_PER_VARIANT,
+                               base_hallucination=0.28,
+                               base_toxicity=0.012,
+                               base_compliance=0.91)
+    # Variant B guardrails: chunk=512 slightly reduces hallucination
+    # (more context = better grounding) — toxicity and compliance unchanged
+    g_b = simulate_guardrails(N_PER_VARIANT,
+                               base_hallucination=0.22,
+                               base_toxicity=0.011,
+                               base_compliance=0.92)
+
+    guardrail_results = {}
+    for metric in ["hallucination_rate", "toxicity_rate", "compliance_rate"]:
+        a_vals = g_a[metric].values
+        b_vals = g_b[metric].values
+        _, p = stats.ttest_ind(a_vals, b_vals, equal_var=False)
+        direction = "lower=better" if "rate" in metric and metric != "compliance_rate" else "higher=better"
+        passed = (b_vals.mean() <= a_vals.mean()) if metric != "compliance_rate" else (b_vals.mean() >= a_vals.mean())
+        guardrail_results[metric] = {
+            "mean_a": round(float(a_vals.mean()), 4),
+            "mean_b": round(float(b_vals.mean()), 4),
+            "direction": direction,
+            "guardrail_passed": bool(passed),
+            "p_value": round(float(p), 4),
+        }
+        status = "PASS" if passed else "FAIL"
+        print(f"  {metric}: A={a_vals.mean():.3f} -> B={b_vals.mean():.3f} ({direction}) [{status}]")
+
+    all_passed = all(v["guardrail_passed"] for v in guardrail_results.values())
+    print(f"\nOverall guardrail check: {'ALL PASSED — safe to ship B' if all_passed else 'GUARDRAIL FAILED — do not ship'}")
+
+    # Save combined results
+    combined = {"primary_metrics": results, "guardrail_metrics": guardrail_results}
+    with open("ab_test_results.json", "w") as f:
+        json.dump(combined, f, indent=2)
+    print("Updated: ab_test_results.json (includes guardrail metrics)")
+
     plot_results(df_a, df_b, results)
-    return results
+    return combined
 
 
 if __name__ == "__main__":
