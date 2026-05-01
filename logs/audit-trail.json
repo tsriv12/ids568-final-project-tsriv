@@ -34,7 +34,7 @@
     "version": "1.1.0",
     "description": "Updated chunk_size from 256 to 512 tokens based on A/B test results. Re-indexed ChromaDB mlops_rag collection. Model card updated to reflect new configuration.",
     "approved_by": "Tanya Srivastava",
-    "artifacts": ["docs/model-card.md", "rag_pipeline.ipynb"]
+    "artifacts": ["docs/system-card.md", "rag_pipeline.ipynb"]
   },
   {
     "timestamp": "2024-12-03T08:00:00Z",

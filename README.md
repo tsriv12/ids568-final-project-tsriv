@@ -23,7 +23,7 @@ User Query -> all-MiniLM-L6-v2 -> ChromaDB (mlops_rag) -> Mistral 7B (Ollama) ->
 |---|---|---|
 | C1: Monitoring | Prometheus + Grafana wrapping real Ollama calls | [Instrumentation](src/monitoring/instrumentation.py) · [Simulator](src/monitoring/traffic_simulator.py) · [Interpretation](docs/dashboard-interpretation.md) |
 | C2: A/B Test | chunk_size=256 vs 512 on mlops_rag corpus | [Spec](docs/experiment-specification.md) · [Script](src/ab_test/simulation.py) · [Memo](docs/recommendation-memo.md) |
-| C3: Governance | mistral:7b-instruct model card + audit trail | [Model Card](docs/model-card.md) · [Risk Register](docs/risk-register.md) · [Audit Trail](logs/audit-trail.json) · [Lineage](docs/lineage-diagram.png) |
+| C3: Governance | mistral:7b-instruct model card + audit trail | [System Card](docs/system-card.md) · [Risk Register](docs/risk-register.md) · [Audit Trail](logs/audit-trail.json) · [Lineage](docs/lineage-diagram.png) |
 | C4: Drift Detection | 4-week PSI analysis from M6 baselines | [Script](src/drift/drift_detection.py) · [Report](docs/drift-diagnostic-report.md) |
 | C5: Risk Assessment | System boundary + governance review + CTO memo | [Governance](docs/governance-review.md) · [Risk Matrix](docs/risk-matrix.md) · [CTO Memo](docs/cto-memo.md) · [Diagram](docs/system-boundary-diagram.png) |
 
