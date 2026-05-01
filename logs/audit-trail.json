@@ -39,7 +39,7 @@
   {
     "timestamp": "2024-12-03T08:00:00Z",
     "event_type": "drift_detection_run",
-    "description": "Drift analysis completed over 4 simulated weeks. query_length PSI=0.45 at week 4 (critical, above 0.25 threshold). retrieval_similarity degraded from 0.891 to 0.68. Intervention recommended: add confidence threshold and expand corpus.",
+    "description": "Drift analysis completed over 4 simulated weeks. query_length PSI=4.211 at week 4 (critical, far above 0.25 threshold). retrieval_similarity PSI=2.120 at week 4. retrieval_similarity degraded from 0.891 to 0.68. Intervention recommended: add confidence threshold and expand corpus.",
     "approved_by": "Tanya Srivastava",
     "artifacts": ["src/drift/drift_detection.py", "docs/drift-diagnostic-report.md", "visualizations/drift_psi_summary.png"]
   },
